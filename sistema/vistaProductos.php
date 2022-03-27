@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include "../conexion.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@ session_start();
     <?php
     include '../includes/includes.php';
     ?>
-    <title>Tables | Tailwind Admin</title>
+    <title>Productos | SerProTec - Soft</title>
 </head>
 
 <body>
@@ -37,43 +37,7 @@ session_start();
                 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
 
                     <div class="flex flex-col">
-                        <!-- Card Sextion Starts Here -->
-                        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
-                            <!--Horizontal form-->
-                            <div class="mb-2 border-solid border-grey-light rounded border shadow-sm w-full md:w-1/2 lg:w-1/2">
-                                <div class="bg-gray-300 px-2 py-3 border-solid border-gray-400 border-b">
-                                    Categorias
-                                </div>
-                                <div class="p-3">
-                                    <table class="table-fixed">
-                                        <thead>
-                                            <tr>
-                                                <th class="border w-1/2 px-4 py-2">Codigo</th>
-                                                <th class="border w-1/4 px-4 py-2">Categorias</th>
-                                                <th class="border w-1/4 px-4 py-2">Descripción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border px-4 py-2">Intro to CSS</td>
-                                                <td class="border px-4 py-2">Adam</td>
-                                                <td class="border px-4 py-2">858</td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!--/Horizontal form-->
-
-
-                        </div>
-                        <!-- /Cards Section Ends Here -->
-
-
-
-
-                        <!--Grid Form-->
+                        <!--División Productos -->
 
                         <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                             <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
@@ -92,37 +56,54 @@ session_start();
                                                 <th class="border w-1/7 px-4 py-2">Codigo</th>
                                                 <th class="border w-1/4 px-4 py-2">Producto</th>
                                                 <th class="border w-1/4 px-4 py-2">Descripción</th>
-                                                <th class="border w-1/6 px-4 py-2">Precio Venta</th>
-                                                <th class="border w-1/7 px-4 py-2">Precio Costo</th>
-                                                <th class="border w-1/7 px-4 py-2">Marca</th>
+                                                <th class="border w-1/6 px-4 py-2">Marca</th>
+                                                <th class="border w-1/7 px-4 py-2">Precio Venta</th>
+                                                <th class="border w-1/9 px-4 py-2">Existencia</th>
                                                 <th class="border w-1/4 px-4 py-2">Acciones</th>
-
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border px-4 py-2">1</td>
-                                                <td class="border px-4 py-2">Aceite 20w50</td>
-                                                <td class="border px-4 py-2">Aceite motor</td>
-                                                <td class="border px-4 py-2">125.00</td>
-                                                <td class="border px-4 py-2">75.00</td>
-                                                <td class="border px-4 py-2">Castrol</td>
-                                                <td class="border px-4 py-2">
-                                                    <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
-                                                        <i class="fas fa-eye"></i></a>
-                                                    <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
-                                                        <i class="fas fa-edit"></i></a>
-                                                    <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                        <?php
+
+                                            $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '0';");
+                                            $resultado = mysqli_num_rows($consulta_productos);
+                                            mysqli_close($conection);
+
+                                            if($resultado > 0){
+                                                while($datos_obtenidos = mysqli_fetch_array($consulta_productos)){
+                                                    ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="border px-4 py-2"><?php echo $datos_obtenidos['ID_PRODUCTO']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_obtenidos['PRODUCTO']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_obtenidos['DESCRIPCION']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_obtenidos['MARCA']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_obtenidos['PRC_VENTA']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_obtenidos['EXISTENCIA']; ?></td>
+                                                        <td class="border px-4 py-2">
+                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                                <i class="fas fa-eye"></i></a>
+                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                                <i class="fas fa-edit"></i></a>
+                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <?php
+                                                }
+                                            }
+
+
+                                        ?>
+                                        
+                                                </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <!--/Grid Form-->
+                        <!--/División Productos -->
                     </div>
                 </main>
                 <!--/Main-->
@@ -147,7 +128,7 @@ session_start();
             <div class="modal-content shadow-lg p-5">
                 <div class="border-b p-2 pb-3 pt-0 mb-4">
                     <div class="flex justify-between items-center">
-                        Modal header
+                        AGREGAR PRODUCTOS
                         <span class='close-modal cursor-pointer px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200'>
                             <i class="fas fa-times text-gray-700"></i>
                         </span>
@@ -158,28 +139,42 @@ session_start();
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
-                                First Name
+                                Nombre del Producto
                             </label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" placeholder="Jane">
-                            <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                            <input class="appearance-none block w-full border border-grey-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" placeholder="Producto">
+                            <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
                         </div>
-                        <div class="w-full md:w-1/2 px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-last-name">
-                                Last Name
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
+                                Unidad de Medida
                             </label>
-                            <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600" id="grid-last-name" type="text" placeholder="Doe">
+                            <div class="relative">
+                                <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-state">
+                                    <option>GLN</option>
+                                    <option>LITRO</option>
+                                    <option>1/2 LITRO</option>
+                                    <option>UNIDAD</option>
+                                    <option>METRO</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full px-3">
-                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-password">
-                                Password
+                        <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
+                                Descripción del Producto
                             </label>
-                            <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-password" type="password" placeholder="******************">
-                            <p class="text-grey-dark text-xs italic">Make it as long and as crazy as
-                                you'd like</p>
+                            <input class="appearance-none block w-full  border border-grey-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" placeholder="Producto">
                         </div>
+                        
                     </div>
+   
                     <div class="flex flex-wrap -mx-3 mb-2">
                         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-city">
