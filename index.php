@@ -18,7 +18,7 @@ else{
     $usuario = $_POST['login'];
     $contrasena = $_POST['pass'];
 
-    $query = mysqli_query($conection, "SELECT * FROM USUARIOS WHERE USER = '$usuario' AND PASSWORD = '$contrasena'");
+    $query = mysqli_query($conection, "SELECT * FROM USUARIOS WHERE USER = '$usuario' AND PASSWORD = '$contrasena' AND ESTATUS = '0'");
 				mysqli_close($conection);
 				$result = mysqli_num_rows($query);
 

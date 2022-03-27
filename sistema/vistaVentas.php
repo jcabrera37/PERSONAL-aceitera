@@ -11,9 +11,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
     <!-- Css -->
-    <link rel="stylesheet" href="../dist/styles.css">
-    <link rel="stylesheet" href="../dist/all.css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <?php
+        include '../includes/includes.php';
+    ?>
     <title>Inicio | SerProTec Soft</title>
 </head>
 
@@ -84,14 +84,12 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- /Stats Row Ends Here -->
 
                         <!-- Card Sextion Starts Here -->
                         <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
 
                             <!-- card -->
-
                             <div class="rounded overflow-hidden shadow bg-white mx-2 w-full">
                                 <div class="px-6 py-2 border-b border-light-grey">
                                     <div class="font-bold text-xl">Trending Categories</div>

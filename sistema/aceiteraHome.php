@@ -1,11 +1,10 @@
 <?php
 session_start();
-if ($_SESSION['Tipo'] != 'ADMINISTRADOR') 
-	{
-		header("location: ../sistema/vistaVentas.php");
-	}
+if ($_SESSION['Tipo'] != 'ADMINISTRADOR') {
+    header("location: ../sistema/vistaVentas.php");
+}
 
-     include "../conexion.php";
+include "../conexion.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +18,7 @@ if ($_SESSION['Tipo'] != 'ADMINISTRADOR')
     <link rel="stylesheet" href="../dist/styles.css">
     <link rel="stylesheet" href="../dist/all.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
-   <link rel="stylesheet" href="../dist/estilos.css">
+    <link rel="stylesheet" href="../dist/estilos.css">
     <title>Inicio | SerProTec Soft</title>
 </head>
 
@@ -102,48 +101,73 @@ if ($_SESSION['Tipo'] != 'ADMINISTRADOR')
                                 <div class="px-6 py-2 border-b border-light-grey">
                                     <div class="font-bold text-xl">Usuarios Registrados</div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table text-grey-darkest">
-                                        <thead class="bg-grey-dark text-white text-normal">
-                                            <tr>
-                                                <th scope="col">Codigo.</th>
-                                                <th scope="col">Usuario</th>
-                                                <th scope="col">Password</th>
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Apellido</th>
-                                                <th scope="col">Tipo</th>
-                                                <th scope="col">Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <?php
-                                            $consulta_usuarios = mysqli_query($conection, "SELECT * FROM `USUARIOS` WHERE ESTATUS = 0;");
-                                            $resultado = mysqli_num_rows($consulta_usuarios);
-                                            mysqli_close($conection);
-
-                                            if($resultado > 0){
-                                                while($datos_de_usuarios = mysqli_fetch_array($consulta_usuarios)){
+                               
+                                <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                                    <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                                        <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                                            Full Table
+                                        </div>
+                                        <div class="p-3">
+                                            <table class="table-responsive w-full rounded">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border w-1/4 px-4 py-2">Código</th>
+                                                        <th class="border w-1/6 px-4 py-2">Nombre</th>
+                                                        <th class="border w-1/6 px-4 py-2">Apellido</th>
+                                                        <th class="border w-1/6 px-4 py-2">Usuario</th>
+                                                        <th class="border w-1/7 px-4 py-2">Contraseña</th>
+                                                        <th class="border w-1/7 px-4 py-2">Estatus</th>
+                                                        <th class="border w-1/5 px-4 py-2">Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <?php
+                                                    $consulta_usuarios = mysqli_query($conection, "SELECT * FROM `USUARIOS`");
+                                                    $resultado = mysqli_num_rows($consulta_usuarios);
+                                                    mysqli_close($conection);
+            
+                                                    if ($resultado > 0) {
+                                                        while ($datos_de_usuarios = mysqli_fetch_array($consulta_usuarios)) {
                                                     ?>
-                                        <tbody>
-                                            <td><?php echo $datos_de_usuarios['ID_USER'];?></td>
-                                            <td><?php echo $datos_de_usuarios['USER'];?></td>
-                                            <td><?php echo $datos_de_usuarios['PASSWORD'];?></td>
-                                            <td><?php echo $datos_de_usuarios['NOMBRE'];?></td>
-                                            <td><?php echo $datos_de_usuarios['APELLIDOS'];?></td>
-                                            <td><?php echo $datos_de_usuarios['TIPO'];?></td>
-                                            <td><a href="" class="btn-ver">Ver </a> | <a href="" class="btn-eliminar"> Eliminar</a></td>
-                                        </tbody>
-
-                                        <?php
-                                                }//fin de while datos
-
-
-                                            }//fin de if resultado
-
-                                            
-                                        
-                                        ?>
-                                        
-                                    </table>
+                                                
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="border px-4 py-2"><?php echo $datos_de_usuarios['ID_USER']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_de_usuarios['NOMBRE']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_de_usuarios['APELLIDOS']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_de_usuarios['USER']; ?></td>
+                                                        <td class="border px-4 py-2"><?php echo $datos_de_usuarios['PASSWORD']; ?></td>
+                                                        <td class="border px-4 py-2">
+                                                            <?php
+                                                                if($datos_de_usuarios['ESTATUS'] == 0){
+                                                                    ?>
+                                                                    <i class="fas fa-check text-green-500 mx-2"></i>
+                                                                    <?php       
+                                                                }else{
+                                                                    ?>
+                                                                    <i class="fas fa-times text-red-500 mx-2"></i>
+                                                                    <?php 
+                                                                }
+                                                            ?>
+                                                         <!--   -->
+                                                        </td>
+                                                        <td class="border px-4 py-2">
+                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                                <i class="fas fa-eye"></i></a>
+                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                                <i class="fas fa-edit"></i></a>
+                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    }
+                                                }
+                                                ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /card -->
