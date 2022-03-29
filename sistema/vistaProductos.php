@@ -53,24 +53,44 @@ include "../conexion.php";
                                     <table class="table-responsive w-full rounded">
                                         <thead>
                                             <tr>
-                                                <th class="border w-1/7 px-4 py-2">Codigo</th>
+                                                <th class="border w-1/10 px-4 py-2">Codigo</th>
                                                 <th class="border w-1/4 px-4 py-2">Producto</th>
-                                                <th class="border w-1/4 px-4 py-2">Descripción</th>
-                                                <th class="border w-1/6 px-4 py-2">Marca</th>
+                                                <th class="border w-1/2 px-4 py-2">Descripción</th>
+                                                <th class="border w-1/7 px-4 py-2">Marca</th>
                                                 <th class="border w-1/7 px-4 py-2">Precio Venta</th>
-                                                <th class="border w-1/9 px-4 py-2">Existencia</th>
+                                                <th class="border w-1/9 px-4 py-2">Inv</th>
                                                 <th class="border w-1/4 px-4 py-2">Acciones</th>
                                             </tr>
                                         </thead>
                                         <?php
 
-                                            $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '0';");
-                                            $resultado = mysqli_num_rows($consulta_productos);
-                                            mysqli_close($conection);
+                                        //PAGINADOR
+                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM producto WHERE ESTATUS = 0;");
+                                        $result_registros = mysqli_fetch_array($sql_registros);
+                                        $total_registros = $result_registros['total_registros'];
 
-                                            if($resultado > 0){
-                                                while($datos_obtenidos = mysqli_fetch_array($consulta_productos)){
-                                                    ?>
+                                        $reg_pagina = 5; //total de registros por paginas
+
+                                        if (empty($_GET['pagina'])) {
+                                            $pagina = 1;
+                                        } else {
+                                            $pagina = $_GET['pagina'];
+                                        }
+                                        $desde = ($pagina - 1) * $reg_pagina;
+                                        $total_paginas = ceil($total_registros / $reg_pagina);
+
+                                        $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '0'
+                                                                                        ORDER BY MARCA LIMIT $desde,$reg_pagina;");
+                                        $resultado = mysqli_num_rows($consulta_productos);
+
+
+                                        // $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '0';");
+                                        // $resultado = mysqli_num_rows($consulta_productos);
+                                        mysqli_close($conection);
+
+                                        if ($resultado > 0) {
+                                            while ($datos_obtenidos = mysqli_fetch_array($consulta_productos)) {
+                                        ?>
                                                 <tbody>
                                                     <tr>
                                                         <td class="border px-4 py-2"><?php echo $datos_obtenidos['ID_PRODUCTO']; ?></td>
@@ -91,20 +111,57 @@ include "../conexion.php";
                                                     </tr>
 
 
-                                                    <?php
-                                                }
+                                            <?php
                                             }
+                                        }
 
 
-                                        ?>
-                                        
+                                            ?>
+
+
+
                                                 </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
+
                         <!--/División Productos -->
                     </div>
+                    <!-- PAGINADOR -->
+                    <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                       
+                        <div class="mb-2 border-solid border-gray-200 rounded border shadow-sm w-full md:w-1/2 lg:w-1/2">
+                            <div class="p-3">
+                                <div class="inline-flex">
+                                    <li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l">
+                                        <a class="page-link" href="?pagina=<?php echo 1;?>">Primer</a>
+                                    </li>
+
+                                    <?php
+                        for ($i=1; $i <= $total_paginas; $i++) { 
+                            if ($i == $pagina) {
+                                echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link">'.$i.'</a></li>';
+                            }else{
+                                echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link" href="?pagina='.$i.'">'.$i.'</a></li>';
+                            }
+                            
+                        }
+                    ?>
+
+                                    <li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l">
+                                        <a class="page-link" href="?pagina=<?php echo $total_paginas;?>">Última</a>
+                                    </li>
+                                   
+                                </div>
+
+
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                    <!--  PAGINADOR  -->
                 </main>
                 <!--/Main-->
             </div>
@@ -172,9 +229,9 @@ include "../conexion.php";
                             </label>
                             <input class="appearance-none block w-full  border border-grey-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" placeholder="Producto">
                         </div>
-                        
+
                     </div>
-   
+
                     <div class="flex flex-wrap -mx-3 mb-2">
                         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-city">
