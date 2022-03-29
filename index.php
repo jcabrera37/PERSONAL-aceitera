@@ -85,7 +85,7 @@ else{
             </div>
             <form action="" method="post" >
                 <input class="input-text" type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
-                <input class="input-text" type="password" id="password" class="fadeIn third" name="pass" placeholder="Contraseña">
+                <input class="input-text" type="password" id="password" class="fadeIn third" name="pass" placeholder="Clave">
                 <input type="submit" class="fadeIn fourth" value="Iniciar sesión">
             </form>
             <span class="msj-error">
