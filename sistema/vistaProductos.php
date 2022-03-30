@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 session_start();
 include "../conexion.php";
 
@@ -20,7 +23,7 @@ if (!empty($_POST))
 
 
     $query_insert = mysqli_query($conection, "INSERT INTO `PRODUCTO` (`ID_PRODUCTO`, `PRODUCTO`, `UM`, `DESCRIPCION`, `PRC_VENTA`, `PRC_COSTO`, `MARCA`, `CATEGORIA`, `ESTATUS`, `EXISTENCIA`, `INGRESOS`, `SALIDAS`) 
-                                                VALUES (NULL, 'ACEITE ', 'GLN', 'ACEITE DE MOTOR', '127.35', '100.45', 'MOTUL', 'ACEITES', '0', '3', '4', '1');
+                                                VALUES (NULL, '$prod ', '$unme', '$desc', '$pVta', '$pCto', '$marc', '$catg', '0', '0', '0', '0');
                                                 ");
 
         if($query_insert){
@@ -125,10 +128,7 @@ if (!empty($_POST))
                                                                                         ORDER BY MARCA LIMIT $desde,$reg_pagina;");
                                         $resultado = mysqli_num_rows($consulta_productos);
 
-
-                                        // $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '0';");
-                                        // $resultado = mysqli_num_rows($consulta_productos);
-                                        mysqli_close($conection);
+                                        //mysqli_close($conection);
 
                                         if ($resultado > 0) {
                                             while ($datos_obtenidos = mysqli_fetch_array($consulta_productos)) {
@@ -245,13 +245,23 @@ if (!empty($_POST))
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
                                 Unidad de Medida
                             </label>
+                            <?php
+                                $query_um = mysqli_query($conection, "SELECT * FROM `UM`");
+                                $result_um = mysqli_num_rows($query_um);
+                            ?>
                             <div class="relative">
                                 <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="unidadMedida" id="grid-state">
-                                    <option>GLN</option>
-                                    <option>LITRO</option>
-                                    <option>1/2 LITRO</option>
-                                    <option>UNIDAD</option>
-                                    <option>METRO</option>
+                                    <?php
+                                        if($result_um > 0)
+                                        {
+                                            while($data_um = mysqli_fetch_array($query_um))
+                                            {
+                                    ?>
+                                                <option><?php echo $data_um['UNIDAD_MEDIDA'];?></option>
+                                    <?php
+                                            }    
+                                        }
+                                    ?>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -298,13 +308,23 @@ if (!empty($_POST))
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
                                 Categoría
                             </label>
+                            <?php
+                                $query_categoria = mysqli_query($conection, "SELECT * FROM `CATEGORIAS`");
+                                $result_categoria = mysqli_num_rows($query_categoria);
+                            ?>
                             <div class="relative">
                                 <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="categoria" id="grid-state">
-                                <option>ACEITES</option>
-                                    <option>FILTROS</option>
-                                    <option>FAJAS</option>
-                                    <option>REPUESTOS</option>
-                                    <option>SERVICIOS</option>
+                                <?php
+                                    if($result_categoria > 0)
+                                    {
+                                        while($data_categoria = mysqli_fetch_array($query_categoria))
+                                        {
+                                ?>
+                                    <option><?php echo $data_categoria['CATEGORIA'];?></option>
+                                <?php
+                                        }
+                                    }
+                                ?>                                                            
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
