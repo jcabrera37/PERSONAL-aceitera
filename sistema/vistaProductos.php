@@ -1,6 +1,48 @@
 <?php
 session_start();
 include "../conexion.php";
+
+if (!empty($_POST)) 
+{
+    $prod = $_POST['producto'];
+    $unme = $_POST['unidadMedida'];
+    $desc = $_POST['descripcion'];
+    $pVta = $_POST['precioVenta'];
+    $pCto = $_POST['precioCosto'];
+    $marc = $_POST['marca'];
+    $catg = $_POST['categoria'];
+
+    //echo $prod,$unme,$desc,$pVta,$pCto,$marc,$catg;
+    
+    $ingresos = 0;
+    $existencia = 0;
+    $salidas = 0;
+
+
+    $query_insert = mysqli_query($conection, "INSERT INTO `PRODUCTO` (`ID_PRODUCTO`, `PRODUCTO`, `UM`, `DESCRIPCION`, `PRC_VENTA`, `PRC_COSTO`, `MARCA`, `CATEGORIA`, `ESTATUS`, `EXISTENCIA`, `INGRESOS`, `SALIDAS`) 
+                                                VALUES (NULL, 'ACEITE ', 'GLN', 'ACEITE DE MOTOR', '127.35', '100.45', 'MOTUL', 'ACEITES', '0', '3', '4', '1');
+                                                ");
+
+        if($query_insert){
+        echo '<script type="text/javascript">
+        alert("Producto creado correctamente!");
+        self.location = "VistaProductos.php"
+        </script>'
+        ;
+        }else{
+        echo '<script type="text/javascript">
+        alert("Error al crear el Producto!");
+        self.location = "VistaProductos.php"
+        </script>'
+        ;
+
+        }
+
+
+    }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +79,7 @@ include "../conexion.php";
                 <main class="bg-white-500 flex-1 p-3 overflow-hidden">
 
                     <div class="flex flex-col">
-                        <!--División Productos -->
+                        <!-- Tabla de  Productos -->
 
                         <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                             <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
@@ -125,40 +167,38 @@ include "../conexion.php";
                                 </div>
                             </div>
                         </div>
-
-                        <!--/División Productos -->
+                        <!--/ Tabla de Productos -->
                     </div>
                     <!-- PAGINADOR -->
                     <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
-                       
+
                         <div class="mb-2 border-solid border-gray-200 rounded border shadow-sm w-full md:w-1/2 lg:w-1/2">
                             <div class="p-3">
                                 <div class="inline-flex">
                                     <li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l">
-                                        <a class="page-link" href="?pagina=<?php echo 1;?>">Primer</a>
+                                        <a class="page-link" href="?pagina=<?php echo 1; ?>">Primer</a>
                                     </li>
 
                                     <?php
-                        for ($i=1; $i <= $total_paginas; $i++) { 
-                            if ($i == $pagina) {
-                                echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link">'.$i.'</a></li>';
-                            }else{
-                                echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link" href="?pagina='.$i.'">'.$i.'</a></li>';
-                            }
-                            
-                        }
-                    ?>
+                                    for ($i = 1; $i <= $total_paginas; $i++) {
+                                        if ($i == $pagina) {
+                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link">' . $i . '</a></li>';
+                                        } else {
+                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link" href="?pagina=' . $i . '">' . $i . '</a></li>';
+                                        }
+                                    }
+                                    ?>
 
                                     <li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l">
-                                        <a class="page-link" href="?pagina=<?php echo $total_paginas;?>">Última</a>
+                                        <a class="page-link" href="?pagina=<?php echo $total_paginas; ?>">Última</a>
                                     </li>
-                                   
+
                                 </div>
 
 
                             </div>
 
-                           
+
                         </div>
                     </div>
                     <!--  PAGINADOR  -->
@@ -192,21 +232,21 @@ include "../conexion.php";
                     </div>
                 </div>
                 <!-- Modal content -->
-                <form id='form_id' class="w-full">
+                <form id='form_id' class="w-full" method="POST">
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
                                 Nombre del Producto
                             </label>
-                            <input class="appearance-none block w-full border border-grey-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" placeholder="Producto">
-                            <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                            <input class="appearance-none block w-full border border-grey-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" name="producto" placeholder="Producto">
+                            
                         </div>
                         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
                                 Unidad de Medida
                             </label>
                             <div class="relative">
-                                <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-state">
+                                <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="unidadMedida" id="grid-state">
                                     <option>GLN</option>
                                     <option>LITRO</option>
                                     <option>1/2 LITRO</option>
@@ -221,18 +261,64 @@ include "../conexion.php";
                             </div>
                         </div>
                     </div>
-
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full md:w-1/1 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
                                 Descripción del Producto
                             </label>
-                            <input class="appearance-none block w-full  border border-grey-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" placeholder="Producto">
+                            <input class="appearance-none block w-full  border border-grey-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" name="descripcion" placeholder="Producto">
                         </div>
-
                     </div>
 
-                    <div class="flex flex-wrap -mx-3 mb-2">
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
+                                Precio Venta
+                            </label>
+                            <input class="appearance-none block w-full border border-grey-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" name="precioVenta" placeholder="Precio venta">
+                            
+                        </div>
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
+                                Precio Costo
+                            </label>
+                            <input class="appearance-none block w-full border border-grey-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" name="precioCosto" placeholder="Precio Costo">
+                            
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1" for="grid-first-name">
+                                Marca
+                            </label>
+                            <input class="appearance-none block w-full border border-grey-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500" id="grid-first-name" type="text" name="marca" placeholder="Marca">
+                            
+                        </div>
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-state">
+                                Categoría
+                            </label>
+                            <div class="relative">
+                                <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="categoria" id="grid-state">
+                                <option>ACEITES</option>
+                                    <option>FILTROS</option>
+                                    <option>FAJAS</option>
+                                    <option>REPUESTOS</option>
+                                    <option>SERVICIOS</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-darker">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    
+
+                    <!-- <div class="flex flex-wrap -mx-3 mb-2">
                         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1" for="grid-city">
                                 City
@@ -262,12 +348,13 @@ include "../conexion.php";
                             </label>
                             <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-zip" type="text" placeholder="90210">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="mt-5">
-                        <button class='bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded'> Submit </button>
+                        <input type="submit" class='bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded' value="Guardar" style="cursor: pointer;">
+                        <!-- <button class='bg-green-500 hover:bg-green-800 text-white font-bold py-2 px-4 rounded'> Guardar </button> -->
                         <span class='close-modal cursor-pointer bg-red-200 hover:bg-red-500 text-red-900 font-bold py-2 px-4 rounded'>
-                            Close
+                            Cerrar
                         </span>
                     </div>
                 </form>
