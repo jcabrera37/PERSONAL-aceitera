@@ -110,7 +110,7 @@ if (!empty($_POST))
                                         <?php
 
                                         //PAGINADOR
-                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM producto WHERE ESTATUS = 0;");
+                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM producto WHERE ESTATUS = 1;");
                                         $result_registros = mysqli_fetch_array($sql_registros);
                                         $total_registros = $result_registros['total_registros'];
 
@@ -124,7 +124,7 @@ if (!empty($_POST))
                                         $desde = ($pagina - 1) * $reg_pagina;
                                         $total_paginas = ceil($total_registros / $reg_pagina);
 
-                                        $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '0'
+                                        $consulta_productos = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ESTATUS = '1'
                                                                                         ORDER BY MARCA LIMIT $desde,$reg_pagina;");
                                         $resultado = mysqli_num_rows($consulta_productos);
 
@@ -146,7 +146,7 @@ if (!empty($_POST))
                                                                 <i class="fas fa-eye"></i></a>
                                                             <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                                                 <i class="fas fa-edit"></i></a>
-                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500">
+                                                            <a href="../sistema/eliminarProducto.php?id=<?php echo $datos_obtenidos['ID_PRODUCTO'];?>" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </td>
@@ -182,14 +182,14 @@ if (!empty($_POST))
                                     <?php
                                     for ($i = 1; $i <= $total_paginas; $i++) {
                                         if ($i == $pagina) {
-                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link">' . $i . '</a></li>';
+                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full"><a class="page-link">' . $i . '</a></li>';
                                         } else {
-                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link" href="?pagina=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full"><a class="page-link" href="?pagina=' . $i . '">' . $i . '</a></li>';
                                         }
                                     }
                                     ?>
 
-                                    <li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l">
+                                    <li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-r">
                                         <a class="page-link" href="?pagina=<?php echo $total_paginas; ?>">Última</a>
                                     </li>
 
@@ -248,6 +248,7 @@ if (!empty($_POST))
                             <?php
                                 $query_um = mysqli_query($conection, "SELECT * FROM `UM`");
                                 $result_um = mysqli_num_rows($query_um);
+                                mysqli_close($conection);
                             ?>
                             <div class="relative">
                                 <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="unidadMedida" id="grid-state">

@@ -90,7 +90,7 @@ if (!empty($_POST))
                                         <?php
 
                                         //PAGINADOR
-                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM producto WHERE ESTATUS = 0;");
+                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM categorias WHERE ESTATUS = 0;");
                                         $result_registros = mysqli_fetch_array($sql_registros);
                                         $total_registros = $result_registros['total_registros'];
 

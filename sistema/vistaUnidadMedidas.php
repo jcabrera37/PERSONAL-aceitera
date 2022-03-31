@@ -83,7 +83,7 @@ if (!empty($_POST))
                                         <thead>
                                             <tr>
                                                 <th class="border w-1/8 px-4 py-2">Codigo</th>
-                                                <th class="border w-1/2 px-4 py-2">Um</th>
+                                                <th class="border w-1/4 px-4 py-2">UM</th>
                                                 <th class="border w-1/2 px-4 py-2">Descripción</th>
                                                 <th class="border w-1/4 px-4 py-2">Acciones</th>
                                             </tr>
@@ -91,7 +91,7 @@ if (!empty($_POST))
                                         <?php
 
                                         //PAGINADOR
-                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM producto WHERE ESTATUS = 0;");
+                                        $sql_registros = mysqli_query($conection, "SELECT COUNT(*) AS total_registros FROM UM WHERE ESTATUS = 0;");
                                         $result_registros = mysqli_fetch_array($sql_registros);
                                         $total_registros = $result_registros['total_registros'];
 
@@ -157,9 +157,9 @@ if (!empty($_POST))
                                     <?php
                                     for ($i = 1; $i <= $total_paginas; $i++) {
                                         if ($i == $pagina) {
-                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link">' . $i . '</a></li>';
+                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full"><a class="page-link">' . $i . '</a></li>';
                                         } else {
-                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-gray-200 hover:bg-gray-500 text-gray-900 font-bold py-2 px-4 rounded-l"><a class="page-link" href="?pagina=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li style="text-decoration: none; list-style: none;" class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full"><a class="page-link" href="?pagina=' . $i . '">' . $i . '</a></li>';
                                         }
                                     }
                                     ?>
