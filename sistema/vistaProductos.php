@@ -1,6 +1,5 @@
 <?php
 
-use LDAP\Result;
 
 session_start();
 include "../conexion.php";
@@ -114,7 +113,7 @@ if (!empty($_POST))
                                         $result_registros = mysqli_fetch_array($sql_registros);
                                         $total_registros = $result_registros['total_registros'];
 
-                                        $reg_pagina = 5; //total de registros por paginas
+                                        $reg_pagina = 10; //total de registros por paginas
 
                                         if (empty($_GET['pagina'])) {
                                             $pagina = 1;
@@ -144,7 +143,7 @@ if (!empty($_POST))
                                                         <td class="border px-4 py-2">
                                                             <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                                                 <i class="fas fa-eye"></i></a>
-                                                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                            <a href="../sistema/editarProducto.php?id=<?php //echo $datos_obtenidos['ID_PRODUCTO'];?>" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                                                 <i class="fas fa-edit"></i></a>
                                                             <a href="../sistema/eliminarProducto.php?id=<?php echo $datos_obtenidos['ID_PRODUCTO'];?>" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-red-500">
                                                                 <i class="fas fa-trash"></i>
@@ -209,9 +208,9 @@ if (!empty($_POST))
 
 
             <!--Footer-->
-            <footer class="bg-grey-darkest text-white p-2">
-                <div class="flex flex-1 mx-auto">&copy; My Design</div>
-            </footer>
+            <?php
+                include "../includes/footer.php";
+            ?>
             <!--/footer-->
 
         </div>
@@ -248,7 +247,7 @@ if (!empty($_POST))
                             <?php
                                 $query_um = mysqli_query($conection, "SELECT * FROM `UM`");
                                 $result_um = mysqli_num_rows($query_um);
-                                mysqli_close($conection);
+                                
                             ?>
                             <div class="relative">
                                 <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="unidadMedida" id="grid-state">
@@ -312,6 +311,7 @@ if (!empty($_POST))
                             <?php
                                 $query_categoria = mysqli_query($conection, "SELECT * FROM `CATEGORIAS`");
                                 $result_categoria = mysqli_num_rows($query_categoria);
+                                mysqli_close($conection);
                             ?>
                             <div class="relative">
                                 <select class="block appearance-none w-full  border border-grey-200 text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" name="categoria" id="grid-state">
