@@ -265,3 +265,7 @@ html {
   .msj-error{
     color: red;
   }
+
+  #spacio-button{
+    background-color: #0d0d0d;
+  }

@@ -5,42 +5,42 @@ include "../conexion.php";
 //Eliminar el registro
 
 if (!empty($_POST)) {
-  $IDELIMINAR = $_POST['IDPRODUCTO'];
-  $query_delete = mysqli_query($conection, "UPDATE `PRODUCTO` SET `ESTATUS` = '0' WHERE `PRODUCTO`.`ID_PRODUCTO` = '$IDELIMINAR';");
-  
-  if ($query_delete) {
-    echo '<script type="text/javascript">
+    $IDELIMINAR = $_POST['IDPRODUCTO'];
+    $query_delete = mysqli_query($conection, "UPDATE `PRODUCTO` SET `ESTATUS` = '0' WHERE `PRODUCTO`.`ID_PRODUCTO` = '$IDELIMINAR';");
+
+    if ($query_delete) {
+        echo '<script type="text/javascript">
                     alert("Registro eliminado correctamente!");
                     self.location = "vistaProductos.php"
                     </script>';
-  } else {
-    echo '<script type="text/javascript">
+    } else {
+        echo '<script type="text/javascript">
                     alert("Error al eliminar el registro!");
                     self.location = "vistaProductos.php"
                     </script>';
-  }
+    }
 }
 
 //llenar datos del usuario seleccionado
 if (empty($_REQUEST['id'])) {
     header("location: ../sistema/vistaProductos.php");
     mysqli_close($conection);
-  } else {
-  
+} else {
+
     $IDPRODUCTO = $_REQUEST['id'];
-    
+
     $query = mysqli_query($conection, "SELECT * FROM `PRODUCTO` WHERE ID_PRODUCTO = '$IDPRODUCTO';");
     mysqli_close($conection);
     $result = mysqli_num_rows($query);
     if ($result > 0) {
-      while ($data = mysqli_fetch_array($query)) {
-        $COD_PRODUCTO = $data['ID_PRODUCTO'];
-        $NOMBRE = $data['PRODUCTO'];
-      }
+        while ($data = mysqli_fetch_array($query)) {
+            $COD_PRODUCTO = $data['ID_PRODUCTO'];
+            $NOMBRE = $data['PRODUCTO'];
+        }
     } else {
-      header("location: vistaProductos.php");
+        header("location: vistaProductos.php");
     }
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,7 +109,7 @@ if (empty($_REQUEST['id'])) {
 
             <!--Footer-->
             <?php
-                include "../includes/footer.php";
+            include "../includes/footer.php";
             ?>
             <!--/footer-->
 

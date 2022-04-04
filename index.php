@@ -39,14 +39,14 @@ else{
           if($_SESSION['Tipo'] == 'ADMINISTRADOR')
           {
             ?>
-            <meta http-equiv="refresh" content="0.5; url= sistema/aceiteraHome.php"/>
+            <meta http-equiv="refresh" content="0.3; url= sistema/aceiteraHome.php"/>
                   <script language = javascript>
                   alert("Bienvenido Administrador!")
                   </script>
             <?php
           }else{
             ?>
-            <meta http-equiv="refresh" content="1; url= sistema/vistaVentas.php"/>
+            <meta http-equiv="refresh" content="0.3; url= sistema/vistaVentas.php"/>
                   <script language = javascript>
                   alert("Bienvenido!")
                   </script>
