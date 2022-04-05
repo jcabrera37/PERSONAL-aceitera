@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="w-full h-full py-3 px-2 border-b border-light-border">
-            <a href="../sistema/vistaUnidadMedidas.php" class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+            <a href="../sistema/listaProveedores.php" class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
                 <i class="fab fa-cuttlefish float-left mx-2"></i>
                 Proveedores
                 <span><i class="fa fa-angle-right float-right"></i></span>
