@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if ($_SESSION['Tipo'] != 'VENTAS') {
+        header("location: ../");
+    }
     
 ?>
 <!DOCTYPE html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if ($_SESSION['Tipo'] != 'ADMINISTRADOR') {
     header("location: ../sistema/vistaVentas.php");
 }

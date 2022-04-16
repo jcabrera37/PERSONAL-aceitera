@@ -87,7 +87,7 @@ if (!empty($_POST))
                                 </div>
                                 <div class="p-3">
                                     <table class="table-responsive w-full rounded">
-                                        <thead>
+                                        <thead class="bg-grey-dark text-white text-normal">
                                             <tr>
                                                 <th class="border w-1/10 px-4 py-2">Codigo</th>
                                                 <th class="border w-1/8 px-4 py-2">Nombre</th>

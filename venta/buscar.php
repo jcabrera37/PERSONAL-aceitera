@@ -14,8 +14,8 @@ $resultado = mysqli_num_rows($queryb);
 
 if ($resultado > 0){
     $salida.="
-        <table class='table table-hover'>
-            <thead>
+        <table class='table text-grey-darkest'>
+            <thead>            
                 <tr>
                     <td>IMAGEN</td>
                     <td>ID</td>
@@ -24,7 +24,7 @@ if ($resultado > 0){
                     <td>DESCRIPCION</td>
                     <td>PRECIO</td>
                     <td>MARCA</td>
-                    <td>AGREGAR</td>
+                    <td>ACCIONES</td>
                 </tr>
             </thead>
             <tbody>";

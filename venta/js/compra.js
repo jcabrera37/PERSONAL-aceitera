@@ -79,7 +79,7 @@ function procesarCompra() {
                      setTimeout(() => {
                          compra.vaciarLocalStorage();
                          enviado.remove();
-                         window.location = "../compra.php";
+                         window.location = "../venta/ventas.php";
                      }, 2000);
 
 

@@ -206,7 +206,7 @@ class Carrito {
             
         }
         
-        igv = parseFloat(total * 0.18).toFixed(2);
+        igv = parseFloat(total * 0.12).toFixed(2);
         subtotal = parseFloat(total-igv).toFixed(2);
 
         document.getElementById('subtotal').innerHTML = "Q. " + subtotal;

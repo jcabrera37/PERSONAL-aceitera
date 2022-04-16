@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if ($_SESSION['Tipo'] != 'VENTAS') {
+        header("location: ../");
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +47,7 @@
                 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                     <!-- <a class="navbar-brand" href="../sistema/vistaVentas.php"></a> -->
                     <span><img src="../img/logo_aceitera.jpeg"  alt="" width="75px"></span>
-                    <a href="../venta/venta.php" style="text-decoration: none; cursor:pointer"><h2 class="text-white p-1">Aceitera "El Chino"</h2></a>
+                    <a href="../venta/ventas.php" style="text-decoration: none; cursor:pointer"><h2 class="text-white p-1">Aceitera "El Chino"</h2></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
